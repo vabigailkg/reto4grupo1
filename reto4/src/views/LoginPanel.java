@@ -4,6 +4,10 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import management.AlbumManager;
+import management.GroupManager;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -21,11 +25,14 @@ public class LoginPanel extends JPanel {
 	private JPanel panel = null;
 	private JTextField textFieldLogin;
 	private JTextField textFieldPassword;
+	
 
 	/**
 	 * Create the panel.
 	 */
+	
 	public LoginPanel(ArrayList<JPanel> panels) {
+		
 		panel = new JPanel();
 		panel.setBackground(new Color(58, 58, 58));
 		panel.setBounds(0, 0, 1000, 650);
@@ -65,6 +72,7 @@ public class LoginPanel extends JPanel {
 		btnNewButtonConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(textFieldLogin.getText().equals("admin") && textFieldPassword.getText().equals("admin")) {
+					
 					panels.get(7).setVisible(false);
 					panels.get(8).setVisible(true);
 				}else {

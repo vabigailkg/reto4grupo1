@@ -3,6 +3,9 @@ package views;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import management.AlbumManager;
+import pojos.Album;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -14,19 +17,26 @@ public class MainPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel panel = null;
-
+	private Album album;
+	public AlbumManager albumManager=null;
 	/**
 	 * Create the panel.
 	 */
 	public MainPanel(ArrayList<JPanel> panels) {
+		
 		panel = new JPanel();
 		panel.setBounds(0, 0, 1000, 650);
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		album=new Album();
+		albumManager=new AlbumManager();
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(0, 0, 450, 300);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
+		
+		albumManager.obtenerAlbumAleatorio();
 		
 		JButton btnNewButtonGroups = new JButton("Descubre Grupos");
 		btnNewButtonGroups.setBounds(268, 66, 138, 23);
@@ -78,24 +88,25 @@ public class MainPanel extends JPanel {
 		});
 		panel_1.add(btnNewButtonExit);
 		
-		JLabel lblNewLabelGroupImage = new JLabel("ImagenGrupo");
-		lblNewLabelGroupImage.setBounds(79, 104, 82, 14);
+		JLabel lblNewLabelGroupImage = new JLabel("image");
+		lblNewLabelGroupImage.setBounds(79, 104, 100, 20);
 		panel_1.add(lblNewLabelGroupImage);
 		
-		JLabel lblNewLabelGroupName = new JLabel("NombreGrupo");
-		lblNewLabelGroupName.setBounds(79, 70, 82, 14);
+		JLabel lblNewLabelGroupName = new JLabel("idGrupo");
+		lblNewLabelGroupName.setBounds(79, 70, 100, 20);
 		panel_1.add(lblNewLabelGroupName);
 		
-		JLabel lblNewLabelCDTitle = new JLabel("TítuloDisco");
-		lblNewLabelCDTitle.setBounds(79, 138, 82, 14);
+		JLabel lblNewLabelCDTitle = new JLabel();
+		lblNewLabelCDTitle.setText(album.getTitle()+"");
+		lblNewLabelCDTitle.setBounds(79, 138, 100, 20);
 		panel_1.add(lblNewLabelCDTitle);
 		
-		JLabel lblNewLabelCDDate = new JLabel("FechaDisco");
-		lblNewLabelCDDate.setBounds(81, 172, 80, 14);
+		JLabel lblNewLabelCDDate = new JLabel("getPublicationDate()");
+		lblNewLabelCDDate.setBounds(81, 172, 100, 20);
 		panel_1.add(lblNewLabelCDDate);
 		
-		JLabel lblNewLabelCDGenre = new JLabel("GeneroDisco");
-		lblNewLabelCDGenre.setBounds(79, 206, 82, 14);
+		JLabel lblNewLabelCDGenre = new JLabel("getGenre()");
+		lblNewLabelCDGenre.setBounds(79, 206, 100, 20);
 		panel_1.add(lblNewLabelCDGenre);
 		
 		JButton btnNewButtonGroupManagement = new JButton("Gestionar Grupos");
