@@ -4,8 +4,8 @@ import javax.swing.JPanel;
 
 import javax.swing.border.EmptyBorder;
 
-import management.SongManager;
-import pojos.Content;
+import db.management.SongManager;
+import db.pojos.Content;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

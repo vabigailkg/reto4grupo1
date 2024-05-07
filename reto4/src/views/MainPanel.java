@@ -1,142 +1,199 @@
 package views;
 
 import javax.swing.JPanel;
+
 import javax.swing.border.EmptyBorder;
 
-import management.AlbumManager;
-import pojos.Album;
+import db.management.*;
+import db.pojos.*;
+import panelControllers.MainPanelController;
+import utils.functionalities.Functionalities;
+import db.pojos.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import java.awt.Color;
+import java.awt.Image;
+import java.awt.Font;
 
 public class MainPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel panel = null;
-	private Album album;
-	public AlbumManager albumManager=null;
-	/**
-	 * Create the panel.
-	 */
+	private Album album = null;
+	private Group grupo = null;
+	private MainPanelController mainController =null;
+	private Functionalities functionalities=null;
+
 	public MainPanel(ArrayList<JPanel> panels) {
-		
 		panel = new JPanel();
+		panel.setBackground(new Color(58, 58, 58));
 		panel.setBounds(0, 0, 1000, 650);
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
-		album=new Album();
-		albumManager=new AlbumManager();
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 0, 450, 300);
-		panel.add(panel_1);
-		panel_1.setLayout(null);
-		
-		albumManager.obtenerAlbumAleatorio();
+		album =new Album();
+		grupo =new Group();
+		mainController= new MainPanelController();
+		functionalities=new Functionalities();
+		mainController.getAdd(album , grupo);
 		
 		JButton btnNewButtonGroups = new JButton("Descubre Grupos");
-		btnNewButtonGroups.setBounds(268, 66, 138, 23);
+		btnNewButtonGroups.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnNewButtonGroups.setBounds(600, 30, 250, 50);
+		btnNewButtonGroups.setForeground(new Color(62, 202, 27));
+		btnNewButtonGroups.setBackground(new Color(58, 58, 58));
 		btnNewButtonGroups.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panels.get(8).setVisible(false);
 				panels.get(5).setVisible(true);
 			}
 		});
-		panel_1.add(btnNewButtonGroups);
-		
+		panel.setLayout(null);
+		panel.add(btnNewButtonGroups);
+
 		JButton btnNewButtonPodcast = new JButton("Descubre Podcast");
-		btnNewButtonPodcast.setBounds(268, 100, 138, 23);
+		btnNewButtonPodcast.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnNewButtonPodcast.setBounds(600, 100, 250, 50);
+		btnNewButtonPodcast.setForeground(new Color(62, 202, 27));
+		btnNewButtonPodcast.setBackground(new Color(58, 58, 58));
 		btnNewButtonPodcast.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panels.get(8).setVisible(false);
 				panels.get(10).setVisible(true);
 			}
 		});
-		panel_1.add(btnNewButtonPodcast);
-		
+		panel.add(btnNewButtonPodcast);
+
 		JButton btnNewButtonFavorites = new JButton("Mis Favoritos");
-		btnNewButtonFavorites.setBounds(268, 134, 138, 23);
+		btnNewButtonFavorites.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnNewButtonFavorites.setBounds(600, 170, 250, 50);
+		btnNewButtonFavorites.setForeground(new Color(62, 202, 27));
+		btnNewButtonFavorites.setBackground(new Color(58, 58, 58));
 		btnNewButtonFavorites.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panels.get(8).setVisible(false);
 				panels.get(4).setVisible(true);
 			}
 		});
-		panel_1.add(btnNewButtonFavorites);
-		
+		panel.add(btnNewButtonFavorites);
+
 		JButton btnNewButtonProfile = new JButton("Perfil");
-		btnNewButtonProfile.setBounds(268, 168, 138, 23);
+		btnNewButtonProfile.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnNewButtonProfile.setBounds(600, 240, 250, 50);
+		btnNewButtonProfile.setForeground(new Color(62, 202, 27));
+		btnNewButtonProfile.setBackground(new Color(58, 58, 58));
 		btnNewButtonProfile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panels.get(8).setVisible(false);
 				panels.get(13).setVisible(true);
 			}
 		});
-		panel_1.add(btnNewButtonProfile);
-		
+		panel.add(btnNewButtonProfile);
+
 		JButton btnNewButtonExit = new JButton("Salir");
-		btnNewButtonExit.setBounds(268, 202, 138, 23);
+		btnNewButtonExit.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnNewButtonExit.setBounds(600, 310, 250, 50);
+		btnNewButtonExit.setForeground(new Color(62, 202, 27));
+		btnNewButtonExit.setBackground(new Color(58, 58, 58));
 		btnNewButtonExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panels.get(8).setVisible(false);
 				panels.get(1).setVisible(true);
 			}
 		});
-		panel_1.add(btnNewButtonExit);
+		panel.add(btnNewButtonExit);
+		// ---------------------------------------------Insertar Imagen en el JLabel
+		// Crear el JLabel para mostrar la imagen
+		JLabel lblNewLabelGroupImage = new JLabel();
+		lblNewLabelGroupImage.setBounds(50, 25, 200, 200);
+		panel.add(lblNewLabelGroupImage);
+		lblNewLabelGroupImage.setForeground(new Color(62, 202, 27));
+		lblNewLabelGroupImage.setBackground(new Color(58, 58, 58));
+		lblNewLabelGroupImage.setIcon(new ImageIcon(mainController.imageConverter(album)));
+			
 		
-		JLabel lblNewLabelGroupImage = new JLabel("image");
-		lblNewLabelGroupImage.setBounds(79, 104, 100, 20);
-		panel_1.add(lblNewLabelGroupImage);
-		
-		JLabel lblNewLabelGroupName = new JLabel("idGrupo");
-		lblNewLabelGroupName.setBounds(79, 70, 100, 20);
-		panel_1.add(lblNewLabelGroupName);
-		
+		// ----------------------------------------------------------------------------------------
+		JLabel lblNewLabelGroupName = new JLabel();
+		lblNewLabelGroupName.setBounds(50, 260, 100, 20);
+		lblNewLabelGroupName.setForeground(new Color(62, 202, 27));
+		lblNewLabelGroupName.setBackground(new Color(58, 58, 58));
+		panel.add(lblNewLabelGroupName);
+
 		JLabel lblNewLabelCDTitle = new JLabel();
-		lblNewLabelCDTitle.setText(album.getTitle()+"");
-		lblNewLabelCDTitle.setBounds(79, 138, 100, 20);
-		panel_1.add(lblNewLabelCDTitle);
+		lblNewLabelCDTitle.setBounds(50, 300, 100, 20);
+		lblNewLabelCDTitle.setForeground(new Color(62, 202, 27));
+		lblNewLabelCDTitle.setBackground(new Color(58, 58, 58));
+		panel.add(lblNewLabelCDTitle);
+
+		// Establecer la fecha formateada en el JLabel
+		JLabel lblNewLabelCDDate = new JLabel();
+		lblNewLabelCDDate.setBounds(50, 340, 100, 20);
+		lblNewLabelCDDate.setForeground(new Color(62, 202, 27));
+		lblNewLabelCDDate.setBackground(new Color(58, 58, 58));
+		panel.add(lblNewLabelCDDate);
+
+		JLabel lblNewLabelCDGenre = new JLabel();
+		lblNewLabelCDGenre.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNewLabelCDGenre.setBounds(50, 380, 100, 20);
+		lblNewLabelCDGenre.setForeground(new Color(62, 202, 27));
+		lblNewLabelCDGenre.setBackground(new Color(58, 58, 58));
+		panel.add(lblNewLabelCDGenre);
 		
-		JLabel lblNewLabelCDDate = new JLabel("getPublicationDate()");
-		lblNewLabelCDDate.setBounds(81, 172, 100, 20);
-		panel_1.add(lblNewLabelCDDate);
 		
-		JLabel lblNewLabelCDGenre = new JLabel("getGenre()");
-		lblNewLabelCDGenre.setBounds(79, 206, 100, 20);
-		panel_1.add(lblNewLabelCDGenre);
+		lblNewLabelGroupName.setText(grupo.getName());
+		lblNewLabelCDTitle.setText(album.getTitle());
+		lblNewLabelCDDate.setText(functionalities.date(album));
+		lblNewLabelCDGenre.setText(album.getGenre());
 		
 		JButton btnNewButtonGroupManagement = new JButton("Gestionar Grupos");
-		btnNewButtonGroupManagement.setBounds(79, 266, 89, 23);
+		btnNewButtonGroupManagement.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnNewButtonGroupManagement.setBounds(50, 500, 300, 50);
+		btnNewButtonGroupManagement.setForeground(new Color(62, 202, 27));
+		btnNewButtonGroupManagement.setBackground(new Color(58, 58, 58));
 		btnNewButtonGroupManagement.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panels.get(8).setVisible(false);
 				panels.get(6).setVisible(true);
 			}
 		});
-		panel_1.add(btnNewButtonGroupManagement);
-		
+		panel.add(btnNewButtonGroupManagement);
+
 		JButton btnNewButtonStatisticConsult = new JButton("Consultar Estadisticas");
-		btnNewButtonStatisticConsult.setBounds(269, 266, 89, 23);
+		btnNewButtonStatisticConsult.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnNewButtonStatisticConsult.setBounds(640, 500, 300, 50);
+		btnNewButtonStatisticConsult.setForeground(new Color(62, 202, 27));
+		btnNewButtonStatisticConsult.setBackground(new Color(58, 58, 58));
 		btnNewButtonStatisticConsult.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panels.get(8).setVisible(false);
 				panels.get(18).setVisible(true);
 			}
 		});
-		panel_1.add(btnNewButtonStatisticConsult);
-		
+		panel.add(btnNewButtonStatisticConsult);
+
 		JLabel lblNewLabelAdministrationFunction = new JLabel("Funciones de administrador");
-		lblNewLabelAdministrationFunction.setBounds(158, 241, 138, 14);
-		panel_1.add(lblNewLabelAdministrationFunction);
-		
+		lblNewLabelAdministrationFunction.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabelAdministrationFunction.setBounds(384, 430, 230, 56);
+		lblNewLabelAdministrationFunction.setForeground(new Color(62, 202, 27));
+		lblNewLabelAdministrationFunction.setBackground(new Color(58, 58, 58));
+		panel.add(lblNewLabelAdministrationFunction);
+
 		panel.setLayout(null);
 
 	}
+
 	public JPanel getPanel() {
 		return panel;
 	}
+	
 }
