@@ -12,6 +12,8 @@ public class Album {
 	String description = null;
 	Date publicationDate = null;
 	String genre = null;
+	int numReproduccion = 0;
+	
 	public int getIdAlbum() {
 		return idAlbum;
 	}
@@ -54,9 +56,15 @@ public class Album {
 	public void setGenre(String genre) {
 		this.genre = genre;
 	}
+	public int getNumReproduccion() {
+		return numReproduccion;
+	}
+	public void setNumReproduccion(int numRepodruccion) {
+		this.numReproduccion = numRepodruccion;
+	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(cdImage, description, genre, idAlbum, idGroup, publicationDate, title);
+		return Objects.hash(cdImage, description, genre, idAlbum, idGroup, numReproduccion, publicationDate, title);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -69,12 +77,14 @@ public class Album {
 		Album other = (Album) obj;
 		return Objects.equals(cdImage, other.cdImage) && Objects.equals(description, other.description)
 				&& Objects.equals(genre, other.genre) && idAlbum == other.idAlbum && idGroup == other.idGroup
-				&& Objects.equals(publicationDate, other.publicationDate) && Objects.equals(title, other.title);
+				&& numReproduccion == other.numReproduccion && Objects.equals(publicationDate, other.publicationDate)
+				&& Objects.equals(title, other.title);
 	}
 	@Override
 	public String toString() {
 		return "Album [idAlbum=" + idAlbum + ", idGroup=" + idGroup + ", cdImage=" + cdImage + ", title=" + title
-				+ ", description=" + description + ", publicationDate=" + publicationDate + ", genre=" + genre + "]";
+				+ ", description=" + description + ", publicationDate=" + publicationDate + ", genre=" + genre
+				+ ", numRepodruccion=" + numReproduccion + "]";
 	}
 	
 	

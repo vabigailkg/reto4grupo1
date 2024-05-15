@@ -9,6 +9,7 @@ public abstract class Author {
 	String name = null;
 	String description = null;
 	Date creationDate = null;
+	int numReproduction=0;
 	public int getIdAuthor() {
 		return idAuthor;
 	}
@@ -39,9 +40,15 @@ public abstract class Author {
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
+	public int getNumReproduction() {
+		return numReproduction;
+	}
+	public void setNumReproduction(int numReproduction) {
+		this.numReproduction = numReproduction;
+	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(creationDate, description, idAuthor, imagen, name);
+		return Objects.hash(creationDate, description, idAuthor, imagen, name, numReproduction);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -54,12 +61,13 @@ public abstract class Author {
 		Author other = (Author) obj;
 		return Objects.equals(creationDate, other.creationDate) && Objects.equals(description, other.description)
 				&& idAuthor == other.idAuthor && Objects.equals(imagen, other.imagen)
-				&& Objects.equals(name, other.name);
+				&& Objects.equals(name, other.name) && numReproduction == other.numReproduction;
 	}
 	@Override
 	public String toString() {
 		return "Author [idAuthor=" + idAuthor + ", imagen=" + imagen + ", name=" + name + ", description=" + description
-				+ ", creationDate=" + creationDate + "]";
+				+ ", creationDate=" + creationDate + ", numReproduction=" + numReproduction + "]";
 	}
+	
 
 }

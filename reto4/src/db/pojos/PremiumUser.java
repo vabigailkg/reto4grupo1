@@ -3,33 +3,53 @@ package db.pojos;
 import java.util.Objects;
 
 public class PremiumUser extends User {
-	int cardNumber = 0;
-	String expirationDate = null;
-	int cvv = 0;
 
-	public int getCardNumber() {
-		return cardNumber;
-	}
+    // Campo estático para almacenar la única instancia de PremiumUser
+    private static PremiumUser instance;
 
-	public void setCardNumber(int cardNumber) {
-		this.cardNumber = cardNumber;
-	}
+    long cardNumber = 0;
+    String expirationDate = null;
+    int cvv = 0;
 
-	public String getExpirationDate() {
-		return expirationDate;
-	}
+    // Constructor privado para evitar la creación de instancias fuera de la clase
+    private PremiumUser() {
+        // Inicializa los campos de PremiumUser
+    }
 
-	public void setExpirationDate(String expirationDate) {
-		this.expirationDate = expirationDate;
-	}
+    // Método público estático para obtener la instancia única de PremiumUser
+    public static PremiumUser getInstance() {
+        // Si la instancia no ha sido creada, crea una nueva
+        if (instance == null) {
+            instance = new PremiumUser();
+        }
+        return instance;
+    }
 
-	public int getCvv() {
-		return cvv;
-	}
+    
 
-	public void setCvv(int cvv) {
-		this.cvv = cvv;
-	}
+    public long getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(long cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public String getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public int getCvv() {
+        return cvv;
+    }
+
+    public void setCvv(int cvv) {
+        this.cvv = cvv;
+    }
 
 	@Override
 	public int hashCode() {
@@ -56,5 +76,6 @@ public class PremiumUser extends User {
 	public String toString() {
 		return "PremiumUser [cardNumber=" + cardNumber + ", expirationDate=" + expirationDate + ", cvv=" + cvv + "]";
 	}
-
+    
+    
 }

@@ -19,4 +19,9 @@ public class Functionalities {
 		String formattedDate = sdf.format(album.getPublicationDate());
 		return formattedDate;
 	}
+	public String converterDate(String fecha) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		String formattedDate = sdf.format(fecha);
+		return formattedDate;
+	}
 }

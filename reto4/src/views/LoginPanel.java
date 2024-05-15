@@ -5,6 +5,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import db.pojos.FreeUser;
+import db.pojos.PremiumUser;
+import db.pojos.User;
 import panelControllers.LoginPanelController;
 
 import javax.swing.JLabel;
@@ -28,6 +31,7 @@ public class LoginPanel extends JPanel {
 	private int tryNumber = 0;
 	private boolean isCorrectLoginPassword = false;
 	private boolean isBlockedAccount = false;
+
 
 	/**
 	 * Create the panel.
@@ -80,51 +84,52 @@ public class LoginPanel extends JPanel {
 				} catch (Exception a) {
 					JOptionPane.showMessageDialog(null, "Error generico - " + a.getMessage());
 				}
-					if (isBlockedAccount)
-						JOptionPane.showMessageDialog(panel,
-								"El usuario está bloqueado, póngase en contacto con el administrador.");
-					else {
+				if (isBlockedAccount)
+					JOptionPane.showMessageDialog(panel,
+							"El usuario está bloqueado, póngase en contacto con el administrador.");
+				else {
+					try {
+						isCorrectLoginPassword = loginPanelController.logInPasswordCorrect(
+								textFieldLogin.getText().trim(), textFieldPassword.getText().trim());
+					} catch (SQLException sqle) {
+						JOptionPane.showMessageDialog(null, "Error con la BBDD - " + sqle.getMessage());
+					} catch (Exception c) {
+						JOptionPane.showMessageDialog(null, "Error generico - " + c.getMessage());
+					}
+					if (isCorrectLoginPassword) {
 						try {
-							isCorrectLoginPassword = loginPanelController.logInPasswordCorrect(
-									textFieldLogin.getText().trim(), textFieldPassword.getText().trim());
+							// Actualiza la ultima conexion
+							loginPanelController.changeLastConection(textFieldLogin.getText().trim());
+							// busca su id
+							loginPanelController.checkUser(textFieldLogin.getText().trim());
 						} catch (SQLException sqle) {
 							JOptionPane.showMessageDialog(null, "Error con la BBDD - " + sqle.getMessage());
 						} catch (Exception c) {
 							JOptionPane.showMessageDialog(null, "Error generico - " + c.getMessage());
 						}
-							if (isCorrectLoginPassword) {
-								try {
-									loginPanelController.changeLastConection(textFieldLogin.getText().trim());
-								}catch (SQLException sqle) {
-									JOptionPane.showMessageDialog(null, "Error con la BBDD - " + sqle.getMessage());
-								}catch (Exception c) {
-									JOptionPane.showMessageDialog(null, "Error generico - " + c.getMessage());
-								}
-								panels.get(7).setVisible(false);
-								panels.get(8).setVisible(true);
-							} else {
-								JOptionPane.showMessageDialog(panel, "El login y el password es incorrecto");
-								if (tryNumber < 2)
-									JOptionPane.showMessageDialog(panel,
-											"Numero de intentos restantes " + (2 - tryNumber));
-								tryNumber++;
-								if (tryNumber == 3) {
-									try {
-										loginPanelController.changeUserToBlock(textFieldLogin.getText().trim());
-										JOptionPane.showMessageDialog(panel, "Su usuario ha sido bloqueado");
-									} catch (SQLException sqle) {
-										JOptionPane.showMessageDialog(null, "Error con la BBDD - " + sqle.getMessage());
-									} catch (Exception blocking) {
-										JOptionPane.showMessageDialog(null,
-												"Error generico - " + blocking.getMessage());
-									}
-								}
+						textFieldLogin.setText(null);
+						textFieldPassword.setText(null);
+							panels.get(7).setVisible(false);
+							panels.get(8).setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(panel, "El login y el password es incorrecto");
+						if (tryNumber < 2)
+							JOptionPane.showMessageDialog(panel, "Numero de intentos restantes " + (2 - tryNumber));
+						tryNumber++;
+						if (tryNumber == 3) {
+							try {
+								loginPanelController.changeUserToBlock(textFieldLogin.getText().trim());
+								JOptionPane.showMessageDialog(panel, "Su usuario ha sido bloqueado");
+							} catch (SQLException sqle) {
+								JOptionPane.showMessageDialog(null, "Error con la BBDD - " + sqle.getMessage());
+							} catch (Exception blocking) {
+								JOptionPane.showMessageDialog(null, "Error generico - " + blocking.getMessage());
 							}
 						}
 					}
-				
+				}
+			}
 
-			
 		});
 
 		btnNewButtonConfirm.setBounds(517, 325, 89, 23);

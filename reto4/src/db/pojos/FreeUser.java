@@ -4,7 +4,22 @@ import java.util.Date;
 import java.util.Objects;
 
 public class FreeUser extends User {
+
+	private static FreeUser instance;
+
 	Date lastPlay = null;
+
+	private FreeUser() {
+
+	}
+
+	public static FreeUser getInstance() {
+		// Si la instancia no ha sido creada, crea una nueva
+		if (instance == null) {
+			instance = new FreeUser();
+		}
+		return instance;
+	}
 
 	public Date getLastPlay() {
 		return lastPlay;
@@ -12,6 +27,10 @@ public class FreeUser extends User {
 
 	public void setLastPlay(Date lastPlay) {
 		this.lastPlay = lastPlay;
+	}
+
+	public static void setInstance(FreeUser instance) {
+		FreeUser.instance = instance;
 	}
 
 	@Override

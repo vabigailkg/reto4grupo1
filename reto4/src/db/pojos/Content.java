@@ -7,7 +7,7 @@ public abstract class Content {
 	int idContent = 0;
 	String title = null;
 	int playAmount = 0;
-	int duration = 0;
+	String duration = null;
 
 	public int getIdContent() {
 		return idContent;
@@ -33,12 +33,12 @@ public abstract class Content {
 		this.playAmount = playAmount;
 	}
 
-	public int getDuration() {
+	public String getDuration() {
 		return duration;
 	}
 
-	public void setDuration(int duration) {
-		this.duration = duration;
+	public void setDuration(String durationString) {
+		this.duration = durationString;
 	}
 
 	@Override

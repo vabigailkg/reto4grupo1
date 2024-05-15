@@ -33,20 +33,25 @@ public class MainPanel extends JPanel {
 	private JPanel panel = null;
 	private Album album = null;
 	private Group grupo = null;
-	private MainPanelController mainController =null;
-	private Functionalities functionalities=null;
-
+	private MainPanelController mainController = null;
+	private Functionalities functionalities = null;
+	private JButton lblNewLabelAdministrationFunction = new JButton("Funciones de administrador");
+	private JButton btnNewButtonStatisticConsult = new JButton("Consultar Estadisticas");
+	private JButton btnNewButtonGroupManagement = new JButton("Gestionar Grupos");
+	private PremiumUser premium=PremiumUser.getInstance();
+	private FreeUser free=FreeUser.getInstance();
 	public MainPanel(ArrayList<JPanel> panels) {
 		panel = new JPanel();
 		panel.setBackground(new Color(58, 58, 58));
 		panel.setBounds(0, 0, 1000, 650);
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		album =new Album();
+		album = new Album();
 		grupo =new Group();
-		mainController= new MainPanelController();
-		functionalities=new Functionalities();
-		mainController.getAdd(album , grupo);
-		
+		panel.setLayout(null);
+		mainController = new MainPanelController();
+		functionalities = new Functionalities();
+		mainController.getAdd(album, grupo);
+
 		JButton btnNewButtonGroups = new JButton("Descubre Grupos");
 		btnNewButtonGroups.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnNewButtonGroups.setBounds(600, 30, 250, 50);
@@ -69,7 +74,7 @@ public class MainPanel extends JPanel {
 		btnNewButtonPodcast.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panels.get(8).setVisible(false);
-				panels.get(10).setVisible(true);
+				panels.get(12).setVisible(true);
 			}
 		});
 		panel.add(btnNewButtonPodcast);
@@ -120,8 +125,7 @@ public class MainPanel extends JPanel {
 		lblNewLabelGroupImage.setForeground(new Color(62, 202, 27));
 		lblNewLabelGroupImage.setBackground(new Color(58, 58, 58));
 		lblNewLabelGroupImage.setIcon(new ImageIcon(mainController.imageConverter(album)));
-			
-		
+
 		// ----------------------------------------------------------------------------------------
 		JLabel lblNewLabelGroupName = new JLabel();
 		lblNewLabelGroupName.setBounds(50, 260, 100, 20);
@@ -148,52 +152,63 @@ public class MainPanel extends JPanel {
 		lblNewLabelCDGenre.setForeground(new Color(62, 202, 27));
 		lblNewLabelCDGenre.setBackground(new Color(58, 58, 58));
 		panel.add(lblNewLabelCDGenre);
-		
-		
+
 		lblNewLabelGroupName.setText(grupo.getName());
 		lblNewLabelCDTitle.setText(album.getTitle());
 		lblNewLabelCDDate.setText(functionalities.date(album));
 		lblNewLabelCDGenre.setText(album.getGenre());
-		
-		JButton btnNewButtonGroupManagement = new JButton("Gestionar Grupos");
+		lblNewLabelAdministrationFunction.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(premium.isAdmin() || free.isAdmin()) {
+				btnNewButtonStatisticConsult.setVisible(true);
+				btnNewButtonGroupManagement.setVisible(true);
+					}
+			}
+		});
 		btnNewButtonGroupManagement.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnNewButtonGroupManagement.setBounds(50, 500, 300, 50);
 		btnNewButtonGroupManagement.setForeground(new Color(62, 202, 27));
 		btnNewButtonGroupManagement.setBackground(new Color(58, 58, 58));
 		btnNewButtonGroupManagement.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				panels.get(8).setVisible(false);
 				panels.get(6).setVisible(true);
+				
+
 			}
 		});
+
 		panel.add(btnNewButtonGroupManagement);
 
-		JButton btnNewButtonStatisticConsult = new JButton("Consultar Estadisticas");
+		
 		btnNewButtonStatisticConsult.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnNewButtonStatisticConsult.setBounds(640, 500, 300, 50);
 		btnNewButtonStatisticConsult.setForeground(new Color(62, 202, 27));
 		btnNewButtonStatisticConsult.setBackground(new Color(58, 58, 58));
 		btnNewButtonStatisticConsult.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				panels.get(8).setVisible(false);
 				panels.get(18).setVisible(true);
 			}
 		});
 		panel.add(btnNewButtonStatisticConsult);
 
-		JLabel lblNewLabelAdministrationFunction = new JLabel("Funciones de administrador");
+		
 		lblNewLabelAdministrationFunction.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabelAdministrationFunction.setBounds(384, 430, 230, 56);
+		lblNewLabelAdministrationFunction.setBounds(355, 430, 280, 56);
 		lblNewLabelAdministrationFunction.setForeground(new Color(62, 202, 27));
 		lblNewLabelAdministrationFunction.setBackground(new Color(58, 58, 58));
 		panel.add(lblNewLabelAdministrationFunction);
 
-		panel.setLayout(null);
+		btnNewButtonGroupManagement.setVisible(false);
+		btnNewButtonStatisticConsult.setVisible(false);
+		lblNewLabelAdministrationFunction.setVisible(true);
 
 	}
-
 	public JPanel getPanel() {
 		return panel;
+		
 	}
-	
 }

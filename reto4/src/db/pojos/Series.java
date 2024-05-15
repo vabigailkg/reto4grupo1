@@ -10,60 +10,53 @@ public class Series {
 	String topic = null;
 	Date startDate = null;
 	Date endDate = null;
-
+	int numReproduction=0;
 	public int getIdSeries() {
 		return idSeries;
 	}
-
 	public void setIdSeries(int idSeries) {
 		this.idSeries = idSeries;
 	}
-
 	public String getTitle() {
 		return title;
 	}
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 	public String getTopic() {
 		return topic;
 	}
-
 	public void setTopic(String topic) {
 		this.topic = topic;
 	}
-
 	public Date getStartDate() {
 		return startDate;
 	}
-
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-
 	public Date getEndDate() {
 		return endDate;
 	}
-
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-
+	public int getNumReproduction() {
+		return numReproduction;
+	}
+	public void setNumReproduction(int numReproduction) {
+		this.numReproduction = numReproduction;
+	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, endDate, idSeries, startDate, title, topic);
+		return Objects.hash(description, endDate, idSeries, numReproduction, startDate, title, topic);
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -74,14 +67,15 @@ public class Series {
 			return false;
 		Series other = (Series) obj;
 		return Objects.equals(description, other.description) && Objects.equals(endDate, other.endDate)
-				&& idSeries == other.idSeries && Objects.equals(startDate, other.startDate)
-				&& Objects.equals(title, other.title) && Objects.equals(topic, other.topic);
+				&& idSeries == other.idSeries && numReproduction == other.numReproduction
+				&& Objects.equals(startDate, other.startDate) && Objects.equals(title, other.title)
+				&& Objects.equals(topic, other.topic);
 	}
-
 	@Override
 	public String toString() {
 		return "Series [idSeries=" + idSeries + ", title=" + title + ", description=" + description + ", topic=" + topic
-				+ ", startDate=" + startDate + ", endDate=" + endDate + "]";
+				+ ", startDate=" + startDate + ", endDate=" + endDate + ", numReproduction=" + numReproduction + "]";
 	}
+
 
 }

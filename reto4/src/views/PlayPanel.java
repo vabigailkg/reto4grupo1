@@ -1,57 +1,33 @@
 package views;
 
-import javax.swing.JPanel;
-
-import javax.swing.border.EmptyBorder;
-
-import db.management.SongManager;
-import db.pojos.Content;
+import db.management.*;
+import panelControllers.SongPanelController;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 public class PlayPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private static final String THE_IMAGE_FILE = new File("").getAbsolutePath() + "\\src\\img\\choco.jpg";
-
 	private JPanel panel = null;
-	private SongManager songManager = null;
-
-	// ----------------
-
-	private Content content = null;
-
-	public void setContent(Content content) {
-		this.content = content;
-	}
-
-	private List<Content> listContent = null;
-
-	public void setListContent(List<Content> listContent) {
-		this.listContent = listContent;
-	}
-
-	// ------------ ----
-
-	@SuppressWarnings("unused")
-	private PlayPanel() {
-	}
-
+	public static final String THE_IMAGE_FILE = new File("").getAbsolutePath() + "\\src\\img\\choco.jpg";
+    private SongPanelController controlador=null;
+	
 	/**
 	 * Create the panel.
 	 */
 	public PlayPanel(ArrayList<JPanel> panels) {
-		songManager = new SongManager();
-
+		
+		controlador=new SongPanelController();
+		
 		panel = new JPanel();
 		panel.setBounds(0, 0, 1000, 650);
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -60,7 +36,7 @@ public class PlayPanel extends JPanel {
 		btnNewButtonPlay.setBounds(214, 197, 60, 30);
 		btnNewButtonPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				songManager.play(content);
+				controlador.play();
 			}
 		});
 		panel.add(btnNewButtonPlay);
@@ -69,7 +45,7 @@ public class PlayPanel extends JPanel {
 		btnNewButtonPrevious.setBounds(40, 200, 100, 25);
 		btnNewButtonPrevious.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				controlador.playPreviousSong();
 			}
 		});
 		panel.add(btnNewButtonPrevious);
@@ -78,8 +54,7 @@ public class PlayPanel extends JPanel {
 		btnNewButtonNext.setBounds(420, 200, 100, 25);
 		btnNewButtonNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				songManager.stop();
-				songManager.playNext(listContent, content);
+				controlador.playNextSong();
 			}
 		});
 		panel.add(btnNewButtonNext);
@@ -114,7 +89,7 @@ public class PlayPanel extends JPanel {
 		btnNewButtonStop.setBounds(285, 197, 60, 30);
 		btnNewButtonStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				songManager.stop();
+				controlador.stop();
 			}
 		});
 		panel.add(btnNewButtonStop);
@@ -131,4 +106,5 @@ public class PlayPanel extends JPanel {
 	public JPanel getPanel() {
 		return panel;
 	}
+	
 }
